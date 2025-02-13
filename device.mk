@@ -156,6 +156,10 @@ PRODUCT_PACKAGES += \
     gralloc.qcom \
     hwcomposer.qcom
 
+# QDCM
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,qdcm_calib_data_*.xml,$(LOCAL_PATH)/qdcm/,$(TARGET_COPY_OUT_VENDOR)/etc/)
+
 PRODUCT_PACKAGES += \
     disable_configstore
 
