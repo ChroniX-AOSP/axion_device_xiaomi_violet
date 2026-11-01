@@ -142,6 +142,11 @@ $(call inherit-product-if-exists, vendor/miuicamera-violet/device.mk)
 PRODUCT_SYSTEM_PROPERTIES += \
     ro.product.mod_device=violet_global
 
+# Cgroup and task profiles
+PRODUCT_COPY_FILES += \
+    system/core/libprocessgroup/profiles/cgroups_30.json:$(TARGET_COPY_OUT_VENDOR)/etc/cgroups.json \
+    system/core/libprocessgroup/profiles/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
+
 # Device-specific settings
 PRODUCT_PACKAGES += \
     XiaomiParts
