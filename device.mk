@@ -414,6 +414,7 @@ PRODUCT_COPY_FILES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
+    android.hardware.vibrator-service.violet \
     vendor.qti.hardware.vibrator.service
 
 PRODUCT_COPY_FILES += \
