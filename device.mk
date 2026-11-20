@@ -29,7 +29,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 
 # Inherit from Dolby
-$(call inherit-product, vendor/lunaris/dolby/dolby.mk)
+$(call inherit-product-if-exists, vendor/lunaris/dolby/dolby.mk)
 
 # vendor/lunaris/dolby/dolby.mk still points its VINTF entries at vintf/dolby_manifest.xml
 # and vintf/dolby_framework_compatibility_matrix.xml, which were moved to configs/vintf/
