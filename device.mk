@@ -28,6 +28,16 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 # Add common definitions for Qualcomm
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 
+# Inherit from Dolby
+$(call inherit-product, vendor/lunaris/dolby/dolby.mk)
+
+# vendor/lunaris/dolby/dolby.mk still points its VINTF entries at vintf/dolby_manifest.xml
+# and vintf/dolby_framework_compatibility_matrix.xml, which were moved to configs/vintf/
+# and no longer exist at those paths. Drop the dangling entries here and declare the
+# real fragments from BoardConfig.mk instead.
+DEVICE_MANIFEST_FILE := $(filter-out vendor/lunaris/dolby/vintf/dolby_manifest.xml,$(DEVICE_MANIFEST_FILE))
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(filter-out vendor/lunaris/dolby/vintf/dolby_framework_compatibility_matrix.xml,$(DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE))
+
 # API level, the device has been commercially launched on
 PRODUCT_SHIPPING_API_LEVEL := 28
 
