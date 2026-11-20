@@ -28,15 +28,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 # Add common definitions for Qualcomm
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 
-# Inherit from Dolby
-$(call inherit-product-if-exists, vendor/lunaris/dolby/dolby.mk)
-
-# vendor/lunaris/dolby/dolby.mk still points its VINTF entries at vintf/dolby_manifest.xml
-# and vintf/dolby_framework_compatibility_matrix.xml, which were moved to configs/vintf/
-# and no longer exist at those paths. Drop the dangling entries here and declare the
-# real fragments from BoardConfig.mk instead.
-DEVICE_MANIFEST_FILE := $(filter-out vendor/lunaris/dolby/vintf/dolby_manifest.xml,$(DEVICE_MANIFEST_FILE))
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(filter-out vendor/lunaris/dolby/vintf/dolby_framework_compatibility_matrix.xml,$(DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE))
+# Dolby
+ifneq ($(wildcard hardware/dolby/dolby.mk),)
+$(call inherit-product, hardware/dolby/dolby.mk)
+else
+$(warning hardware/dolby is missing, sync android_hardware_dolby to hardware/dolby for Dolby)
+endif
 
 # API level, the device has been commercially launched on
 PRODUCT_SHIPPING_API_LEVEL := 28
@@ -79,9 +76,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     libaudio-resampler
-
-# The device ships its own audio effects configuration
-TARGET_USES_CUSTOM_DOLBY_XML := true
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml
